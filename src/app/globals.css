@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #2f1d46ec;
+  --foreground: #ffffff;
 }
 
 @theme inline {
@@ -14,8 +14,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #2f1d46ec;
+    --foreground: #ffffff;
   }
 }
 
@@ -23,4 +23,50 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+  font-size: 70px;
+}
+
+
+.texto-std {
+  font-size: 20px;
+  color: var(--foreground);
+}
+
+.texto-pequeño {
+  font-size: 5px;
+  color: var(--foreground);
+}
+
+/* Estilo de boton */
+
+.btn {
+  border-radius: 3px;
+  display: inline-block;
+  padding: 10px 20px;
+  text-align: center;
+}
+
+.btn-azul {
+  color:white;
+  background: #103099;
+}
+
+.btn-verde {
+  color:white;
+  background: #3db10f;
+}
+
+/* Estilo de los campos */
+
+.input {
+  width: 80%;
+  border: 1px solid;
+  border-radius: 5px;
+  background: white;
+  color: black;
+  margin: 20px 20px;
+  padding: 6px;
 }
