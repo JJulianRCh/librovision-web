@@ -43,8 +43,23 @@ export async function POST(req) {
         }
     );
 
-    return NextResponse.json({
+    const res = NextResponse.json({
         message: "Inicio de sesion exitoso",
+        user: {
+            id: user._id,
+            username: user.username,
+            email: user.email,
+            role: user.role
+        },
         status: 200
     });
+
+    res.cookies.set("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 60 * 60, // 1hr
+        path: "/"
+    });
+
+    return res;
 }

@@ -32,8 +32,6 @@ export default function LoginPage() {
 
             if (data.ok) {
                 router.push("/dashboard");
-            } else {
-                setMessage(data.message);
             }
         } catch(error) {
             setMessage("Error al conectar al servidor")
