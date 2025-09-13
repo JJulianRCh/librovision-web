@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col items-center justify center bg-grey-50 text-center">
+    <main className="min-h-screen flex flex-col bg-gradient-to-l from-[#3b1c4a] to-[#813582] items-center justify center bg-grey-50 text-center">
       <section className="p-10">
         <h1 className="text-4x1 font-bold mb-4">Libro Vision</h1>
         <p className="texto-std">Descubre y comparte tus libros favoritos con esta comunidad</p>

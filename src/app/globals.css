@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #2f1d46ec;
+  --background: #3b2855ff;
   --foreground: #ffffff;
 }
 
@@ -22,7 +22,6 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 h1 {
@@ -57,6 +56,11 @@ h1 {
 .btn-verde {
   color:white;
   background: #3db10f;
+}
+
+.btn-rojo {
+  color: white;
+  background: #e92626;
 }
 
 /* Estilo de los campos */
