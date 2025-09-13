@@ -1,5 +1,86 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+# Sitio Web: Libro Visión
+
+El proposito de este sitio web es el de poder compartir reseñas de libros con los dema con tal de
+de que los usuarios puedan descubrir otras obras literarias de su gusto.
+
+## Entrar como Admin
+
+Para entrar como administrador ingrese los siguientes datos en el login:
+
+- username: admin2025
+- email: admin@email.com
+- password: accessAdmin2025
+
+## Framework
+El framework utilizado para este proyecto fue "nextjs" en fullstack
+
+## Dependencias utilizadas
+
+- bcrypt: ^6.0.0
+- jsonwebtoken: ^9.0.2
+- mongodb: ^6.19.0
+
+# Instalacion
+
+Clone el repositorio del proyecto
+
+``` bash
+git clone https://github.com/JJulianRCh/librovision-web.git
+
+cd librovision
+```
+Instale las dependencias necesarias
+
+``` bash
+npm i bcrypt jsonwebtoken mongodb
+```
+
+- Debe tener un archivo .env que contenga lo siguiente
+
+```ini
+MONGODB_URI = "TU_CLUSTER_DE_MONGODB_CLOUD"
+JWT_SECRET = "TU_SECRET_PROPIO"
+```
+
+## Configuracion de MONGODB
+
+- En mongodb cloud tenga un cluster y base de datos para el proyecto
+- Dentro de ellas debe crear 2 colecciones "users" y "bookreviews"
+- Las colecciones tienen la siguiente estructuras
+
+1. users
+```json
+{
+    "_id": "ObjectId",
+    "username": "string",
+    "email": "string",
+    "password": "string (hashed)",
+    "role": "string (user | admin)"
+}
+```
+
+2. bookreviews
+```json
+{
+    "_id": "ObjectId",
+    "title": "string",
+    "author": "string",
+    "review": "string",
+    "rank": "number (0-5)",
+    "userId": "ObjectId"
+}
+```
+
+## Desplegar el proyector
+
+```bash
+npm i && npm run build && npm run start
+```
+
+A continuacion viene documentacion creada por nextjs para su ejecucion.
+
 ## Getting Started
 
 First, run the development server:
