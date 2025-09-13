@@ -2,10 +2,10 @@ import { NextResponse } from 'next/server';
 import clientPromise from '@/utils/dbconect';
 import bcrypt from 'bcrypt';
 
-export default async function handler(req, res) {
-    if (!req.method !== "POST") return res.status(405).end();
+export async function POST(req) {
+    
 
-    const { username, email, password } = req.body;
+    const { username, email, password } = await req.json();
 
     if (!username || !email || !password) {
         return NextResponse.json({

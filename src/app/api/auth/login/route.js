@@ -3,13 +3,16 @@ import clientPromise from "@/utils/dbconect";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
 
-export default async function handler(req, res) {
-    if (!req.method !== "POST") return res.status(405).end();
+export async function POST(req) {
+    
 
-    const { username, password } = req.body;
+    const { identifier, password } = await req.json();
 
-    if (!username || !password) {
-        return res.status(400).json({ error: "Faltan Campos" });
+    if (!identifier || !password) {
+        return NextResponse.json({
+            message: "Faltan Campos",
+            status: 400
+        });
     }
 
     const client = (await clientPromise).db();
@@ -18,7 +21,7 @@ export default async function handler(req, res) {
     });
 
     if (!user) return NextResponse.json({
-        message: "El usario no existe",
+        message: "El usuario no existe",
         status: 404
     })
 

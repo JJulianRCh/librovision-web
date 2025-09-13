@@ -20,7 +20,7 @@ export default function RegisterPage() {
     };
 
     const handleSubmit = async e => {
-        e.preventDefualt();
+        e.preventDefault();
 
         try {
             const res = await fetch('/api/auth/register', {
@@ -37,6 +37,7 @@ export default function RegisterPage() {
             }
         } catch(error) {
             setMessage("Error al conectar con el servidor");
+            console.log(error);
         }
     };
 

@@ -8,7 +8,7 @@ export default function LoginPage() {
         identifier: "",
         password: ""
     });
-    const [error, setError] = useState("");
+    const [message, setMessage] = useState("");
 
     const handleChange = e => {
         setFormData({
@@ -19,7 +19,6 @@ export default function LoginPage() {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        setError("");
 
         try {
             const res = await fetch("/api/auth/login", {
@@ -29,14 +28,15 @@ export default function LoginPage() {
             });
 
             const data = await res.json();
+            setMessage(data.message);
 
             if (data.ok) {
                 router.push("/dashboard");
             } else {
-                setError(data.message);
+                setMessage(data.message);
             }
         } catch(error) {
-            //
+            setMessage("Error al conectar al servidor")
         }
     };
 
@@ -67,6 +67,7 @@ export default function LoginPage() {
                     <br/>
                     <button className="btn btn-azul" type="submit">Entrar</button>
                 </form>
+                {message && <p>{message}</p>}
             </section>
         </main>
     );
