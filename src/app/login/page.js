@@ -31,7 +31,7 @@ export default function LoginPage() {
             setMessage(data.message);
 
             if (res.ok) {
-                router.push("/dashboard");
+                router.push(data.role === "admin" ? "/admin" : "/dashboard");
             }
         } catch(error) {
             setMessage("Error al conectar al servidor")
