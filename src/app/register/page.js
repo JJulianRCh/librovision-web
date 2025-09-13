@@ -44,7 +44,7 @@ export default function RegisterPage() {
     return (
         <main className="min-h-screen flex flex-col items-center justify center text-center">
             <section>
-                <h1>Creacion de cuenta</h1>
+                <h1>Crea una cuenta</h1>
                 <form onSubmit={handleSubmit} className="space-y-3">
                     <input 
                     className="input"

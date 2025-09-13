@@ -23,14 +23,14 @@ export default function LoginPage() {
         try {
             const res = await fetch("/api/auth/login", {
                 method: "POST",
-                headers: { "Contend-Type": "application/json" },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData)
             });
 
             const data = await res.json();
             setMessage(data.message);
 
-            if (data.ok) {
+            if (res.ok) {
                 router.push("/dashboard");
             }
         } catch(error) {
