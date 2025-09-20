@@ -7,7 +7,7 @@ import Modal from "@/components/Modal";
 export default function DashboardPage() {
     const router = useRouter();
 
-    const user = JSON.parse(localStorage.getItem("user"));
+    const [user, setUser] = useState(null);
 
     const [showFormModal, setShowFormModal] = useState(false);
     const [showReviewsModal, setShowReviewsModal] = useState(false);
@@ -23,13 +23,25 @@ export default function DashboardPage() {
         author: "",
         review: "",
         rank: 0,
-        userId: user.id
+        userId: ""
     });
+    
+    useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+            const parsedUser = JSON.parse(storedUser);
+            setUser(parsedUser);
+            setFormData((prev) => ({...prev, userId: parsedUser.id || parsedUser._id}));
+        } else {
+            router.push("/login");
+        }
+    }, [router]);
 
     const handleChange = e => {
+        if (!user) return;
         setFormData({
             ...formData,
-            userId: user.id,
+            userId: user.id || user._id,
             [e.target.name]: e.target.value
         });
     };
@@ -75,9 +87,9 @@ export default function DashboardPage() {
     };
 
     const fetchMyReviews = async e => {
-        if (!query.trim()) return;
+        if (!user) return;
         try {
-            const res = await fetch(`/api/reviews?userId=${user._id}`);
+            const res = await fetch(`/api/reviews?userId=${user._id || user.id}`);
             const data = await res.json();
             if (res.ok) {
                 setMyReviews(data.reviews);
@@ -86,17 +98,18 @@ export default function DashboardPage() {
         } catch (error) {
             setMessage("Error")
         }
+
     };
 
     useEffect(() => {
-        if (showReviewsModal) fetchMyReviews();
-    }, [showReviewsModal]);
+        if (showReviewsModal && user) fetchMyReviews();
+    }, [showReviewsModal, user]);
 
     return (
         <main 
         className="min-h-screen flex flex-col bg-gradient-to-r from-[#191c36] to-[#253c5e] p-3 items-center justify center text-center"
         >
-            <p className="text-4x1 m-2">Hola, {user.username}</p>
+            <p className="text-4x1 m-2">Hola, {user?.username || "Cargando..."}</p>
             <button 
             className="btn btn-rojo absolute top-4 right-4 px-4 py-2"
             onClick={handleLogout}
