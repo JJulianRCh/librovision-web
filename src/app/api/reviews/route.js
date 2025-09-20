@@ -1,10 +1,31 @@
 import { NextResponse } from "next/server";
 import clientPromise from "@/utils/dbconect";
+import { verifyJWT } from "@/utils/auth";
 
 //POST-publicar resena
 export async function POST(req) {
     try {
+        const decoded = verifyJWT(req);
+        if (!decoded) {
+            return NextResponse.json({
+                message: "No autorizado",
+                status: 401
+            });
+        }
+
         const {title, author, review, rank, userId} = await req.json();
+
+        if (!title || title.length < 2) {
+            return NextResponse.json({message: "Titulo invalido"});
+        }
+
+        if (!review || review.length < 10) {
+            return NextResponse.json({message: "Reseña corta"});
+        }
+
+        if (!Number.isInteger(rank) || rank < 0 || rank > 5) {
+            return NextResponse.json({message: "Puntuación invalida"});
+        }
 
         const client = (await clientPromise).db();
         const bookreviews = client.collection("bookreviews")
