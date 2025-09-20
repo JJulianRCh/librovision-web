@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function RegisterPage() {
     const router = useRouter();
@@ -79,6 +80,8 @@ export default function RegisterPage() {
                     <button className="btn btn-verde">Crear cuenta</button>
                 </form>
                 {message && <p className="mt-4">{message}</p>}
+                <br/><br/><br/>
+                <Link href="/">Atras</Link>
             </section>
         </main>
     );

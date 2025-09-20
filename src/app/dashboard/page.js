@@ -1,9 +1,12 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import ReviewCard from "@/components/ReviewCard";
 import Modal from "@/components/Modal";
 
 export default function DashboardPage() {
+    const router = useRouter();
+
     const user = JSON.parse(localStorage.getItem("user"));
 
     const [showFormModal, setShowFormModal] = useState(false);
@@ -43,7 +46,7 @@ export default function DashboardPage() {
 
             const data = await res.json();
             setMessage(data.message);
-
+            setShowFormModal(!showFormModal);
         } catch (error) {
             setMessage("Ocurrio un error");
         }
@@ -63,13 +66,22 @@ export default function DashboardPage() {
         }
     };
 
+    const handleLogout = async () => {
+        await fetch("/api/auth/logout", {
+            method: "POST"
+        });
+        localStorage.removeItem("user");
+        router.push("/login");
+    };
+
     const fetchMyReviews = async e => {
         if (!query.trim()) return;
         try {
             const res = await fetch(`/api/reviews?userId=${user._id}`);
-            const data = res.json();
+            const data = await res.json();
             if (res.ok) {
                 setMyReviews(data.reviews);
+                setMessage(data.reviews.length ? "" : "No ha publicado ninguna reseña");
             }
         } catch (error) {
             setMessage("Error")
@@ -85,6 +97,12 @@ export default function DashboardPage() {
         className="min-h-screen flex flex-col bg-gradient-to-r from-[#191c36] to-[#253c5e] p-3 items-center justify center text-center"
         >
             <p className="text-4x1 m-2">Hola, {user.username}</p>
+            <button 
+            className="btn btn-rojo absolute top-4 right-4 px-4 py-2"
+            onClick={handleLogout}
+            >
+                Cerrar Sesión
+            </button>
             <div>
                 <input
                 className="w-100 p-1 bg-gray-800 max-w-md mb-6 border rounded"
@@ -163,7 +181,7 @@ export default function DashboardPage() {
                 <div className="flex flex-wrap justify-start gap-4 bg-gray-800 border border-black-200 rounded w-300 h-90 overflow-y-auto">
                     {myReviews.length > 0 ? (
                         myReviews.map((review) => (
-                            ReviewCard(review)
+                            <ReviewCard key={review._id} bookreview={review}/>
                         ))
                     ) : (
                         <p>No tienes ninguna reseña</p>
@@ -174,10 +192,10 @@ export default function DashboardPage() {
             <div className="flex flex-wrap justify-start gap-4 bg-gray-800 border border-black-200 rounded w-300 h-90 overflow-y-auto">
                 { reviews.length > 0 ? (
                     reviews.map((review) => (
-                        <ReviewCard bookreview={review}/>
+                        <ReviewCard key={review._id} bookreview={review}/>
                     ))
                 ) : (
-                    <p>No se hayo resultados</p>
+                    <p>No se encontro resultados</p>
                 )}
             </div>
         </main>

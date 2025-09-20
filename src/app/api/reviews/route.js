@@ -46,8 +46,7 @@ export async function GET(req) {
         const result = await reviews.find(query).toArray();
 
         return NextResponse.json({
-            reviews: reviews,
-            status: 200
+            reviews: result
         });
     } catch (error) {
         return NextResponse.json({

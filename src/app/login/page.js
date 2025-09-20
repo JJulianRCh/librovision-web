@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function LoginPage() {
     const router = useRouter();
@@ -67,6 +68,8 @@ export default function LoginPage() {
                     <button className="btn btn-azul" type="submit">Entrar</button>
                 </form>
                 {message && <p>{message}</p>}
+                <br/><br/><br/>
+                <Link href="/">Atras</Link>
             </section>
         </main>
     );

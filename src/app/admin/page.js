@@ -1,7 +1,10 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function AdminPage() {
+    const router = useRouter();
+
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
@@ -33,13 +36,26 @@ export default function AdminPage() {
         }
     };
 
+    const handleLogout = async () => {
+        await fetch("/api/auth/logout", {
+            method: "POST"
+        });
+        localStorage.removeItem("user");
+        router.push("/login");
+    };
 
     return (
         <main
         className="min-h-screen flex flex-col bg-gradient-to-r from-[#f0b916] to-[#b36505] p-3 items-center justify center text-center"
         >
             <h1 className="text-3x1 font-bold mb-6">Panel de administración</h1>
-            <table className="w-full text-left border border-gray-300">
+            <button 
+            className="btn btn-rojo absolute top-4 right-4 px-4 py-2"
+            onClick={handleLogout}
+            >
+                Cerrar Sesión
+            </button>
+            <table className="w-full text-left border border-gray-300 bg-white-800">
                 <thead>
                     <tr className="border-b border-gray-300">
                         <th className="p-2">Nombre</th>
