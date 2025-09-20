@@ -30,7 +30,7 @@ export default function LoginPage() {
             const data = await res.json();
             setMessage(data.message);
 
-            if (res.ok) {
+            if (res.ok && data.user) {
                 localStorage.setItem("user", JSON.stringify(data.user));
                 router.push(data.role === "admin" ? "/admin" : "/dashboard");
             }

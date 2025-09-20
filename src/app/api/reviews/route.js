@@ -4,7 +4,7 @@ import clientPromise from "@/utils/dbconect";
 //POST-publicar resena
 export async function POST(req) {
     try {
-        const {title, author, review, rank, userId} = req.json();
+        const {title, author, review, rank, userId} = await req.json();
 
         const client = (await clientPromise).db();
         const bookreviews = client.collection("bookreviews")

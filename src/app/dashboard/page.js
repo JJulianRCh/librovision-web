@@ -20,12 +20,13 @@ export default function DashboardPage() {
         author: "",
         review: "",
         rank: 0,
-        userId: user.userId
+        userId: user.id
     });
 
     const handleChange = e => {
         setFormData({
             ...formData,
+            userId: user.id,
             [e.target.name]: e.target.value
         });
     };
@@ -36,7 +37,7 @@ export default function DashboardPage() {
         try {
             const res = await fetch('/api/reviews', {
                 method: "POST",
-                headers: { "Contend-type": "application/json" },
+                headers: { "Content-type": "application/json" },
                 body: JSON.stringify(formData)
             });
 
@@ -65,7 +66,7 @@ export default function DashboardPage() {
     const fetchMyReviews = async e => {
         if (!query.trim()) return;
         try {
-            const res = await fetch(`/api/reviews?userId=${user.username}`);
+            const res = await fetch(`/api/reviews?userId=${user._id}`);
             const data = res.json();
             if (res.ok) {
                 setMyReviews(data.reviews);
@@ -84,12 +85,21 @@ export default function DashboardPage() {
         className="min-h-screen flex flex-col bg-gradient-to-r from-[#191c36] to-[#253c5e] p-3 items-center justify center text-center"
         >
             <p className="text-4x1 m-2">Hola, {user.username}</p>
-            <input
+            <div>
+                <input
                 className="w-100 p-1 bg-gray-800 max-w-md mb-6 border rounded"
                 type="text"
                 placeholder="Buscar un libro para ver sus reseñas"
-
-            />
+                value={query}
+                onChange={e => setQuery(e.target.value)}
+                />
+                <button
+                className="btn btn-azul p-2"
+                onClick={handleSearch}
+                >
+                    Buscar
+                </button>
+            </div>
             <div>
                 <button
                 className="btn btn-azul p-2 m-1 hover:shadow-2x1 transition-shadow"
@@ -110,18 +120,21 @@ export default function DashboardPage() {
                 <form onSubmit={handleSubmit} className="space-y-3">
                     <input
                     type="text"
+                    name="title"
                     placeholder="Titulo del libro"
                     className="input"
                     onChange={handleChange}
                     />
                     <input
                     type="text"
+                    name="author"
                     placeholder="Autor del libro"
                     className="input"
                     onChange={handleChange}
                     />
                     <input
                     type="Number"
+                    name="rank"
                     placeholder="Puntuación (0-5)"
                     min={0}
                     max={5}
@@ -130,6 +143,7 @@ export default function DashboardPage() {
                     />
                     <textarea
                     placeholder="Escribe tu reseña"
+                    name="review"
                     rows={4}
                     className="w-full p-2 border rounded bg-white text-black"
                     onChange={handleChange}
@@ -140,6 +154,8 @@ export default function DashboardPage() {
                     >
                         Subir reseña
                     </button>
+                    <br/>
+                    <p>{message}</p>
                 </form>
             </Modal>
             <Modal isOpen={showReviewsModal} onClose={() => setShowReviewsModal(!showReviewsModal)}>
@@ -147,7 +163,7 @@ export default function DashboardPage() {
                 <div className="flex flex-wrap justify-start gap-4 bg-gray-800 border border-black-200 rounded w-300 h-90 overflow-y-auto">
                     {myReviews.length > 0 ? (
                         myReviews.map((review) => (
-                            <ReviewCard key={review._id} bookreview={review} />
+                            ReviewCard(review)
                         ))
                     ) : (
                         <p>No tienes ninguna reseña</p>
@@ -156,11 +172,13 @@ export default function DashboardPage() {
             </Modal>
             <br/>
             <div className="flex flex-wrap justify-start gap-4 bg-gray-800 border border-black-200 rounded w-300 h-90 overflow-y-auto">
-                {
+                { reviews.length > 0 ? (
                     reviews.map((review) => (
-                        <ReviewCard key={review._id} bookreview={review}/>
+                        <ReviewCard bookreview={review}/>
                     ))
-                }
+                ) : (
+                    <p>No se hayo resultados</p>
+                )}
             </div>
         </main>
     );
