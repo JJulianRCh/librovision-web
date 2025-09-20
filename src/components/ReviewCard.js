@@ -8,7 +8,7 @@ export default function ReviewCard({ bookreview }) {
                     </h2>
                     <p className="text-sm">{bookreview.author}</p>
                 </div>
-                <div className="text-yellow-400 font-semibold text-lg">/5</div>
+                <div className="text-yellow-400 font-semibold text-lg"> {bookreview.rank} /5</div>
             </div>
             <p className="text-sm font-medium">Publicado por: {bookreview.username}</p>
             <p className="">{bookreview.review}</p>

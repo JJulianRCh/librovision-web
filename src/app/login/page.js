@@ -31,6 +31,7 @@ export default function LoginPage() {
             setMessage(data.message);
 
             if (res.ok) {
+                localStorage.setItem("user", JSON.stringify(data.user));
                 router.push(data.role === "admin" ? "/admin" : "/dashboard");
             }
         } catch(error) {
