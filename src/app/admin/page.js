@@ -8,7 +8,7 @@ export default function AdminPage() {
         async function fetchUsers() {
             try {
                 const res = await fetch("/api/admin/users");
-                const data = res.json();
+                const data = await res.json();
                 
                 if (res.ok) {
                     setUsers(data.users);

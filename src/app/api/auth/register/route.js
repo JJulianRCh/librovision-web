@@ -14,6 +14,19 @@ export async function POST(req) {
         });
     }
 
+    if (username < 3 || username > 20) {
+        return NextResponse.json({message: "Nombre invalido", status: 400});
+    }
+
+    const emailREXP = "/^[^\s@]+@[^s@]+\.[^\s@]+$/";
+    if (!email.test(email)) {
+        return NextResponse.json({message: "Correo invalido", status: 400});
+    }
+
+    if (password < 8) {
+        return NextResponse.json({message: "Contraseña corta", status: 400});
+    }
+
     const client = (await clientPromise).db();
     const users = client.collection("users");
 
