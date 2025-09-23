@@ -31,7 +31,10 @@ export default function DashboardPage() {
         if (storedUser) {
             const parsedUser = JSON.parse(storedUser);
             setUser(parsedUser);
-            setFormData((prev) => ({...prev, userId: parsedUser.id || parsedUser._id}));
+            setFormData((prev) => ({
+                ...prev,
+                userId: parsedUser.id || parsedUser._id
+            }));
         } else {
             router.push("/login");
         }

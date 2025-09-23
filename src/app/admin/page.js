@@ -7,16 +7,19 @@ export default function AdminPage() {
 
     const [users, setUsers] = useState([]);
 
+    const [message, setMessage] = useState("");
+
     useEffect(() => {
         async function fetchUsers() {
             try {
                 const res = await fetch("/api/admin/users");
-                const data = res.json();
+                const data = await res.json();
                 
                 if (res.ok) {
                     setUsers(data.users);
                 }
             } catch (error) {
+                setMessage("Ocurrio un error, No se encrontaron usuarios");
                 console.log(error);
             }
         }
@@ -32,7 +35,8 @@ export default function AdminPage() {
             );
             setUsers(users.filter(u => u._id !== id));
         } catch (error) {
-            //
+            setMessage("No se pudo eliminar el usuario")
+            alert(message);
         }
     };
 
@@ -65,7 +69,7 @@ export default function AdminPage() {
                     </tr>
                 </thead>
                 <tbody>
-                    {users.map(u => (
+                    {users.length > 0 ? users.map(u => (
                         <tr key={u._id} className="border-b border-gray-500">
                             <td className="p-2">{u.username}</td>
                             <td className="p-2">{u.email}</td>
@@ -79,7 +83,9 @@ export default function AdminPage() {
                                 </button>
                             </td>
                         </tr>
-                    ))}
+                    )) : (
+                        <p>{message}</p>
+                    )}
                 </tbody>
             </table>
         </main>
