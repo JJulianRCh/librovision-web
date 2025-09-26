@@ -2,10 +2,21 @@ import { NextResponse } from 'next/server';
 import clientPromise from '@/utils/dbconect';
 import bcrypt from 'bcrypt';
 
+function validarEmail(email) {
+  return email.includes('@') && email.includes('.');
+}
+
 export async function POST(req) {
     
 
     const { username, email, password } = await req.json();
+
+    if (!validarEmail(email)) {
+        return Response.json(
+            { error: 'Email no válido' }, 
+            { status: 400 }
+        );
+    }
 
     if (!username || !email || !password) {
         return NextResponse.json({

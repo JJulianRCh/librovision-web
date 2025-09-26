@@ -7,11 +7,7 @@ de que los usuarios puedan descubrir otras obras literarias de su gusto.
 
 ## Entrar como Admin
 
-Para entrar como administrador ingrese los siguientes datos en el login:
-
-- username: admin2025
-- email: admin@email.com
-- password: accessAdmin2025
+Para entrar como administrador usa las variables de entorno
 
 ## Framework
 El framework utilizado para este proyecto fue "nextjs" en fullstack
